@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Juego Disney - Preguntas y Respuestas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>¿Cuánto sabes sobre películas de Disney?</h1>
+    
+    <div id="game-box">
+      <p id="question">Cargando pregunta...</p>
+      <p id="hint"></p>
+
+      <div id="options"></div>
+
+      <div id="result">
+        <img id="character-img" src="" alt="Resultado" />
+        <p id="feedback"></p>
+      </div>
+
+      <button id="next-btn">Siguiente pregunta</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
