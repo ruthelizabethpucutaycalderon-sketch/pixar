@@ -1,99 +1,67 @@
-const questions = [
-  {
-    question: "¿Cómo se llama el pez protagonista de 'Buscando a Nemo'?",
-    options: ["Dory", "Nemo", "Marlin", "Bruce"],
-    answer: "Nemo",
-    hint: "Es el hijo de Marlin.",
-    correctImg: "https://lumiere-a.akamaihd.net/v1/images/open-uri20150422-12561-7s6a1e_113a937e.jpeg",
-    villainImg: "https://static.wikia.nocookie.net/disney/images/e/ee/Darla_01.jpg", // Darla
-  },
-  {
-    question: "¿Quién es el mejor amigo de Aladdín?",
-    options: ["Abú", "Jafar", "Rajah", "Simba"],
-    answer: "Abú",
-    hint: "Es un mono muy travieso.",
-    correctImg: "https://static.wikia.nocookie.net/disney/images/f/f3/Profile_-_Abu.jpeg",
-    villainImg: "https://static.wikia.nocookie.net/disney/images/0/0e/Jafar_disney.png",
-  },
-  {
-    question: "¿Cómo se llama la villana de '101 dálmatas'?",
-    options: ["Úrsula", "Cruella", "Maléfica", "Gothel"],
-    answer: "Cruella",
-    hint: "Le encantan los abrigos de piel...",
-    correctImg: "https://static.wikia.nocookie.net/disney/images/5/55/Pongo101.png", // Pongo (bueno)
-    villainImg: "https://static.wikia.nocookie.net/disney/images/9/91/Cruella_2021.png",
-  },
-  {
-    question: "¿Qué fruta causa el sueño de Blancanieves?",
-    options: ["Naranja", "Plátano", "Manzana", "Fresa"],
-    answer: "Manzana",
-    hint: "Es roja y brillante...",
-    correctImg: "https://static.wikia.nocookie.net/disney/images/b/b0/Snow_white_disney.png",
-    villainImg: "https://static.wikia.nocookie.net/disney/images/f/f4/Evil_Queen_Disney.png",
-  }
-];
-
-let currentQuestion = {};
-let usedQuestions = [];
-
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const hintEl = document.getElementById("hint");
-const resultImg = document.getElementById("character-img");
-const feedbackEl = document.getElementById("feedback");
-const nextBtn = document.getElementById("next-btn");
-
-function loadQuestion() {
-  if (usedQuestions.length === questions.length) {
-    questionEl.innerText = "¡Juego terminado! 🏆";
-    optionsEl.innerHTML = "";
-    hintEl.innerText = "";
-    nextBtn.style.display = "none";
-    return;
-  }
-
-  resultImg.src = "";
-  feedbackEl.innerText = "";
-  nextBtn.style.display = "none";
-
-  // Seleccionar pregunta aleatoria que no haya sido usada
-  let randomIndex;
-  do {
-    randomIndex = Math.floor(Math.random() * questions.length);
-  } while (usedQuestions.includes(randomIndex));
-
-  usedQuestions.push(randomIndex);
-  currentQuestion = questions[randomIndex];
-
-  questionEl.innerText = currentQuestion.question;
-  hintEl.innerText = "Pista: " + currentQuestion.hint;
-
-  optionsEl.innerHTML = "";
-  currentQuestion.options.forEach(option => {
-    const btn = document.createElement("button");
-    btn.innerText = option;
-    btn.onclick = () => checkAnswer(option);
-    optionsEl.appendChild(btn);
-  });
-}
-
-function checkAnswer(selected) {
-  const isCorrect = selected === currentQuestion.answer;
-  resultImg.src = isCorrect ? currentQuestion.correctImg : currentQuestion.villainImg;
-  feedbackEl.innerText = isCorrect ? "¡Correcto! 🎉" : "Incorrecto 😞";
-  nextBtn.style.display = "inline-block";
-
-  // Desactivar botones
-  Array.from(optionsEl.children).forEach(btn => {
-    btn.disabled = true;
-    if (btn.innerText === currentQuestion.answer) {
-      btn.style.backgroundColor = "#66bb6a"; // verde
-    } else if (btn.innerText === selected) {
-      btn.style.backgroundColor = "#ef5350"; // rojo
+import streamlit as st
+import random
+TITULO
+st.Ruth_Pucutay_Calderón
+# Diccionario de preguntas, opciones, respuestas y personajes
+preguntas = [
+    {
+        "pregunta": "¿Cómo se llama el pez protagonista en 'Buscando a Nemo'?",
+        "opciones": ["Dory", "Marlin", "Nemo", "Bubbles"],
+        "respuesta": "Nemo",
+        "personaje_bueno": "nemo.jpg",
+        "villano": "dentista.jpg"
+    },
+    {
+        "pregunta": "¿Cuál es el nombre de la princesa en 'La Bella y la Bestia'?",
+        "opciones": ["Aurora", "Bella", "Ariel", "Elsa"],
+        "respuesta": "Bella",
+        "personaje_bueno": "bella.jpg",
+        "villano": "gastón.jpg"
+    },
+    {
+        "pregunta": "¿Quién es el villano en 'El Rey León'?",
+        "opciones": ["Mufasa", "Timon", "Scar", "Zazú"],
+        "respuesta": "Scar",
+        "personaje_bueno": "simba.jpg",
+        "villano": "scar.jpg"
+    },
+    {
+        "pregunta": "¿Cómo se llama la sirena protagonista en 'La Sirenita'?",
+        "opciones": ["Úrsula", "Ariel", "Flounder", "Vanessa"],
+        "respuesta": "Ariel",
+        "personaje_bueno": "ariel.jpg",
+        "villano": "ursula.jpg"
+    },
+    {
+        "pregunta": "¿Quién entrena a Hércules en la película?",
+        "opciones": ["Zeus", "Hades", "Filoctetes", "Pegaso"],
+        "respuesta": "Filoctetes",
+        "personaje_bueno": "hercules.jpg",
+        "villano": "hades.jpg"
     }
-  });
-}
+]
 
-nextBtn.onclick = loadQuestion;
+# Selecciona una pregunta aleatoria al inicio
+if "pregunta_actual" not in st.session_state:
+    st.session_state.pregunta_actual = random.choice(preguntas)
+    st.session_state.respondido = False
 
-window.onload = loadQuestion;
+st.title("🎬 Quiz Disney: ¿Cuánto sabes?")
+
+q = st.session_state.pregunta_actual
+st.subheader(q["pregunta"])
+respuesta = st.radio("Elige tu respuesta:", q["opciones"])
+
+if st.button("Responder"):
+    st.session_state.respondido = True
+    if respuesta == q["respuesta"]:
+        st.success("¡Correcto! 🎉")
+        st.image("images/" + q["personaje_bueno"], caption="¡Es el personaje correcto!", use_column_width=True)
+    else:
+        st.error("Incorrecto 😢")
+        st.image("images/" + q["villano"], caption="¡Oh no! Apareció el villano...", use_column_width=True)
+
+if st.session_state.respondido:
+    if st.button("Siguiente pregunta"):
+        st.session_state.pregunta_actual = random.choice(preguntas)
+        st.session_state.respondido = False
