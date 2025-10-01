@@ -1,6 +1,6 @@
 import streamlit as st
 import random
-TITULO
+      st.tittle
 st.Ruth_Pucutay_Calderón
 # Diccionario de preguntas, opciones, respuestas y personajes
 preguntas = [
